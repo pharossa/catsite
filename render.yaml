@@ -3,4 +3,7 @@ services:
     name: cat-site
     env: static
     buildCommand: ""
-    staticPublishPath: "./"
+    staticPublishPath: "."
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.9.0"
