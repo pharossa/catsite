@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: cat-site
+    env: static
+    buildCommand: ""
+    staticPublishPath: "./"
