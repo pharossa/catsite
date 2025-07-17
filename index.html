@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kediler Dünyası</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🐱 Kedi Dünyası</div>
+            <ul class="nav-links">
+                <li><a href="#home">🏠 Ana Sayfa</a></li>
+                <li><a href="#about">🐾 Hakkımızda</a></li>
+                <li><a href="#gallery">🖼️ Kedi Galerisi</a></li>
+                <li><a href="#fun">😸 Eğlenceli Bilgiler</a></li>
+                <li><a href="#contact">📞 İletişim</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-paw"></i>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Miyav! 🐱</h1>
+            <p>Kedilerin büyüleyici dünyasına hoş geldiniz!</p>
+            <div class="cat-facts">
+                <p>🐾 Kediler günde ortalama 16-18 saat uyur</p>
+                <p>🐱‍👤 Miyavlamak sadece insanlarla iletişim kurmak içindir</p>
+                <p>😻 Kedilerin kulaklarında 32 kas vardır</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>Kediler Hakkında 🐾</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Miyav! Bizler, dünyanın en sevimli ve gizemli canlılarıyız. Yaklaşık 10.000 yıldır insanlarla birlikte yaşıyoruz. Antik Mısır'da kutsal sayılırdık ve hala da öyleyiz! 😼</p>
+                <p>Her birimizin kendine özgü kişiliği ve karakteri vardır. Kimimiz oyuncu, kimimiz uykuyu çok sever, kimimiz ise sürekli yemek peşindeyizdir. Ama hepimiz sevilmeyi ve ilgi görmeyi çok severiz!</p>
+                <div class="cat-fact">
+                    <h3>Biliyor muydunuz? 🐱</h3>
+                    <p>Kedilerin burun izleri tıpkı insan parmak izleri gibi eşsizdir!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <h2>Kedi Galerisi 📸</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://r.resimlink.com/k4Mylq9w.png" alt="Uykulu Kedi" loading="lazy" class="gallery-img">
+                <p>Uykulu Kedi 😴</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://r.resimlink.com/I_uNHA-aKh.png" alt="Oyun Sever Kedi" loading="lazy" class="gallery-img">
+                <p>Oyun Sever Kedi 🎮</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://r.resimlink.com/XcA4La.png" alt="Meraklı Kedi" loading="lazy" class="gallery-img">
+                <p>Meraklı Kedi 👀</p>
+            </div>
+            <div class="gallery-item">
+                <img src="https://r.resimlink.com/IM2nJzKk7s.png" alt="Minik Pati" loading="lazy" class="gallery-img">
+                <p>Minik Pati 🐾</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="fun" class="fun-facts">
+        <h2>Eğlenceli Kedi Bilgileri 😺</h2>
+        <div class="facts-container">
+            <div class="fact-card">
+                <h3>Miyav Dili</h3>
+                <p>Kediler 100'den fazla farklı ses çıkarabilirken, köpekler sadece 10 farklı ses çıkarabilir.</p>
+            </div>
+            <div class="fact-card">
+                <h3>Hızlı Koşucular</h3>
+                <p>Bir kedi saatte 48 km hıza ulaşabilir - bu Usain Bolt'un rekorundan daha hızlı!</p>
+            </div>
+            <div class="fact-card">
+                <h3>Koku Alma Duyusu</h3>
+                <p>Kedilerin burnunda 200 milyon koku alıcısı vardır. (İnsanlarda bu sayı sadece 5 milyondur)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Bize Ulaşın 🐱‍🏍</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Kedi Severler Kulübü</h3>
+                <p><i class="fas fa-paw"></i> Her gün 09:00 - 18:00 arası açığız</p>
+                <p><i class="fas fa-phone"></i> miyav</p>
+                <p><i class="fas fa-envelope"></i> miyamiyav</p>
+                <div class="social-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <form id="contact-form" action="/submit-form" method="POST">
+                <h3>Mesaj Gönderin</h3>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="Adınız" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
+                </div>
+                <div class="form-group">
+                    <select id="subject" name="subject" required>
+                        <option value="">Konu Seçin</option>
+                        <option value="sahiplendirme">Kedi Sahiplenmek İstiyorum</option>
+                        <option value="yardim">Yardıma İhtiyacım Var</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Mesajınızı yazın..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Gönder 🐾</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Kediler Dünyası</h3>
+                <p>Kediler hakkında her şey burada! 🐱</p>
+            </div>
+            <div class="footer-section">
+                <h3>Hızlı Linkler</h3>
+                <ul>
+                    <li><a href="#home">Ana Sayfa</a></li>
+                    <li><a href="#about">Hakkımızda</a></li>
+                    <li><a href="#gallery">Galeri</a></li>
+                    <li><a href="#contact">İletişim</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Bizi Takip Edin</h3>
+                <div class="social-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Kediler Dünyası. Tüm hakları saklıdır. 🐾</p>
+            <p class="meow">Miyav! 🐱</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

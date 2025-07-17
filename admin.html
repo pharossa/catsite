@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli - Kedi Dünyası</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b9d;
+            --secondary-color: #a8e6ff;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #ff8ab3);
+            color: white;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .messages-container {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .message-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr 2fr 3fr 1fr;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+        }
+        
+        .message {
+            display: grid;
+            grid-template-columns: 1fr 2fr 2fr 3fr 1fr;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        
+        .message:last-child {
+            border-bottom: none;
+        }
+        
+        .message:hover {
+            background-color: #fff9fa;
+        }
+        
+        .message-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-view {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .btn-export {
+            background-color: #2196F3;
+            color: white;
+            padding: 8px 15px;
+            margin-bottom: 20px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .message-details {
+            margin-top: 15px;
+        }
+        
+        .message-details p {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .message-header {
+                display: none;
+            }
+            
+            .message {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 15px;
+                border-bottom: 2px solid #eee;
+            }
+            
+            .message::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+            
+            .message-actions {
+                justify-content: flex-start;
+                margin-top: 10px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cat"></i>
+                    <span>Kedi Dünyası Yönetim</span>
+                </div>
+                <div class="admin-info">
+                    <span id="admin-name">Hoş Geldiniz</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-envelope"></i>
+                <h3 id="total-messages">0</h3>
+                <p>Toplam Mesaj</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-user"></i>
+                <h3 id="unique-senders">0</h3>
+                <p>Farklı Gönderen</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-day"></i>
+                <h3 id="today-messages">0</h3>
+                <p>Bugünkü Mesaj</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <h3 id="response-time">-</h3>
+                <p>Ortalama Yanıt Süresi</p>
+            </div>
+        </div>
+        
+        <button class="btn btn-export" onclick="exportToCSV()">
+            <i class="fas fa-file-export"></i> CSV'ye Aktar
+        </button>
+        
+        <div class="messages-container">
+            <div class="message-header">
+                <div>Tarih</div>
+                <div>İsim</div>
+                <div>E-posta</div>
+                <div>Konu</div>
+                <div>İşlemler</div>
+            </div>
+            <div id="messages-list">
+                <!-- Mesajlar buraya eklenecek -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mesaj Detay Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Mesaj Detayları</h2>
+            <div class="message-details" id="message-details">
+                <!-- Mesaj detayları buraya eklenecek -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Örnek veri - Gerçek uygulamada bu veriler sunucudan gelecek
+        let messages = [];
+        
+        // Sayfa yüklendiğinde çalışacak fonksiyon
+        document.addEventListener('DOMContentLoaded', () => {
+            // Gerçek uygulamada burada sunucudan mesajları çekeceğiz
+            // Şimdilik örnek veri gösteriyoruz
+            fetchMessages();
+        });
+        
+        // Mesajları getir
+        async function fetchMessages() {
+            try {
+                // Gerçek uygulamada: const response = await fetch('/api/messages');
+                // messages = await response.json();
+                
+                // Örnek veri ekleyelim (gerçek uygulamada bu satırı kaldırın)
+                messages = [
+                    {
+                        id: 1,
+                        name: 'Ahmet Yılmaz',
+                        email: 'ahmet@example.com',
+                        subject: 'Kedi maması hakkında',
+                        message: 'Merhaba, hangi kedi mamasını önerirsiniz?',
+                        ip_address: '192.168.1.1',
+                        created_at: '2025-07-16 14:30:22'
+                    },
+                    {
+                        id: 2,
+                        name: 'Ayşe Kaya',
+                        email: 'ayse@example.com',
+                        subject: 'Yavru kedi bakımı',
+                        message: 'Yavru kedim için önerileriniz nelerdir?',
+                        ip_address: '192.168.1.2',
+                        created_at: '2025-07-15 10:15:45'
+                    }
+                ];
+                
+                updateUI();
+            } catch (error) {
+                console.error('Mesajlar yüklenirken hata oluştu:', error);
+            }
+        }
+        
+        // Arayüzü güncelle
+        function updateUI() {
+            const messagesList = document.getElementById('messages-list');
+            
+            if (messages.length === 0) {
+                messagesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Henüz mesaj yok</h3>
+                        <p>Müşterilerinizden gelen mesajlar burada görünecek.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            messagesList.innerHTML = messages.map(message => `
+                <div class="message" data-id="${message.id}">
+                    <div>${formatDate(message.created_at)}</div>
+                    <div>${message.name}</div>
+                    <div>${message.email}</div>
+                    <div>${message.subject || 'Konu yok'}</div>
+                    <div class="message-actions">
+                        <button class="btn btn-view" onclick="viewMessage(${message.id})">
+                            <i class="fas fa-eye"></i> Görüntüle
+                        </button>
+                        <button class="btn btn-delete" onclick="deleteMessage(${message.id})">
+                            <i class="fas fa-trash"></i> Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // İstatistikleri güncelle
+            document.getElementById('total-messages').textContent = messages.length;
+            document.getElementById('unique-senders').textContent = 
+                new Set(messages.map(m => m.email)).size;
+            document.getElementById('today-messages').textContent = 
+                messages.filter(m => isToday(new Date(m.created_at))).length;
+        }
+        
+        // Tarihi biçimlendir
+        function formatDate(dateString) {
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return new Date(dateString).toLocaleDateString('tr-TR', options);
+        }
+        
+        // Bugünün tarihi mi kontrol et
+        function isToday(someDate) {
+            const today = new Date();
+            return someDate.getDate() === today.getDate() &&
+                   someDate.getMonth() === today.getMonth() &&
+                   someDate.getFullYear() === today.getFullYear();
+        }
+        
+        // Mesaj görüntüle
+        function viewMessage(id) {
+            const message = messages.find(m => m.id === id);
+            if (!message) return;
+            
+            const modal = document.getElementById('messageModal');
+            const details = document.getElementById('message-details');
+            
+            details.innerHTML = `
+                <p><strong>Tarih:</strong> ${formatDate(message.created_at)}</p>
+                <p><strong>IP Adresi:</strong> ${message.ip_address}</p>
+                <p><strong>Ad Soyad:</strong> ${message.name}</p>
+                <p><strong>E-posta:</strong> <a href="mailto:${message.email}">${message.email}</a></p>
+                <p><strong>Konu:</strong> ${message.subject || 'Belirtilmemiş'}</p>
+                <p><strong>Mesaj:</strong></p>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 10px;">
+                    ${message.message.replace(/\n/g, '<br>')}
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <a href="mailto:${message.email}?subject=Yanıt: ${message.subject || 'Mesajınız hakkında'}" 
+                       class="btn" style="background: #4CAF50; color: white; text-decoration: none;">
+                        <i class="fas fa-reply"></i> Yanıtla
+                    </a>
+                    <button class="btn btn-delete" onclick="deleteMessage(${message.id}); closeModal();">
+                        <i class="fas fa-trash"></i> Sil
+                    </button>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+        
+        // Modalı kapat
+        function closeModal() {
+            document.getElementById('messageModal').style.display = 'none';
+        }
+        
+        // Mesaj sil
+        function deleteMessage(id) {
+            if (!confirm('Bu mesajı silmek istediğinize emin misiniz?')) return;
+            
+            // Gerçek uygulamada: await fetch(`/api/messages/${id}`, { method: 'DELETE' });
+            messages = messages.filter(m => m.id !== id);
+            updateUI();
+            
+            // Eğer modal açıksa kapat
+            closeModal();
+        }
+        
+        // CSV'ye aktar
+        function exportToCSV() {
+            if (messages.length === 0) {
+                alert('Aktarılacak mesaj bulunamadı.');
+                return;
+            }
+            
+            // CSV başlıkları
+            let csvContent = 'Tarih,Ad Soyad,E-posta,Konu,Mesaj,IP Adresi\n';
+            
+            // Verileri CSV formatına dönüştür
+            messages.forEach(message => {
+                const row = [
+                    `"${message.created_at}"`,
+                    `"${message.name}"`,
+                    `"${message.email}"`,
+                    `"${message.subject || ''}"`,
+                    `"${message.message.replace(/"/g, '""')}"`,
+                    `"${message.ip_address}"`
+                ];
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // İndirme işlemi
+            const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `mesajlar_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Dışarı tıklandığında modalı kapat
+        window.onclick = function(event) {
+            const modal = document.getElementById('messageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
